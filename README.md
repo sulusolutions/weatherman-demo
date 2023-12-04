@@ -45,6 +45,33 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+### 🐝 Consuming L402 Endpoints with Alby
+
+To consume L402 endpoints using Alby, you can use the `fetchWithL402` function from the `@getalby/lightning-tools` package. This function allows you to make requests to L402 endpoints and handle the payment process seamlessly.
+
+Here is an example of how you can use it:
+
+```javascript
+import { fetchWithL402 } from "@getalby/lightning-tools";
+
+const fetchWeather = async (city: string) => {
+    try {
+        const formatted_city = city.replace(/\s/g, '');
+        const response = await fetchWithL402(`https://weatherman.ln.sulu.sh/current?city=${formatted_city}`, 
+        {}, 
+        {headerKey: "L402"})
+
+        const { current } = await response.json();
+
+        // Process the response data...
+    } catch (err) {
+        // Handle error...
+    }
+};
+```
+
+In this example, `fetchWithL402` is used to fetch weather data from an L402 endpoint. The city name is passed as a parameter in the URL. The function returns a promise that resolves with the response of the request.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

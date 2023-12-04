@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { Wind, WaterLevel, Thermometer, Cloudy } from '@icon-park/react';
 import { useForm, FieldValues } from 'react-hook-form'; // Make sure to install react-hook-form
 import { fetchWithL402 } from "@getalby/lightning-tools";
