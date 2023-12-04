@@ -45,6 +45,8 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+**Important**: You will need a WebLN compatible wallet to operate this demo and pay for usage. We recommend using [Alby](https://getalby.com/).
+
 ### 🐝 Consuming L402 Endpoints with Alby
 
 To consume L402 endpoints using Alby, you can use the `fetchWithL402` function from the `@getalby/lightning-tools` package. This function allows you to make requests to L402 endpoints and handle the payment process seamlessly.
@@ -79,5 +81,9 @@ To learn more about Next.js, take a look at the following resources:
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
+
+### Disclaimer
+
+Please note that this is a demo application. We are not responsible for any funds lost while using this demo. Always ensure you are using small amounts for testing and understand the risks involved with digital currency transactions.
 
 
