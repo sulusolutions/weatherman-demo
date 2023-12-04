@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Wind, WaterLevel, Thermometer, Cloudy } from '@icon-park/react';
+import { useForm } from 'react-hook-form'; // Make sure to install react-hook-form
 
 import WeatherCard from './weatherCard';
 
@@ -18,38 +19,47 @@ const CurrentWeather = () => {
     const [weather, setWeather] = useState<WeatherData | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const { register, handleSubmit, watch, formState } = useForm();
+    const [city, setCity] = useState<string>('Waterford, IE');
 
+    const fetchWeather = async (city: string) => {
+        try {
+            setIsLoading(true);
+            const response = await axios.get('https://api.weatherapi.com/v1/current.json', {
+                params: {
+                    key: '3ed0121b9d044816ad7140143230112', 
+                    q: city, 
+                },
+            });
+
+            const { current } = response.data;
+
+            setWeather({
+                temperature: current.temp_c,
+                conditionText: current.condition.text,
+                iconUrl: current.condition.icon,
+                wind: `${current.wind_kph} kph`,
+                humidity: `${current.humidity}`,
+                feelsLike: current.feelslike_c,
+                cloud: `${current.cloud}`,
+            });
+        } catch (err) {
+            setError('Failed to fetch weather data');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const onSubmit = data => {
+        setCity(data.cityInput);
+        fetchWeather(data.cityInput);
+    };
+
+    // Call fetchWeather initially with the default city
     useEffect(() => {
-        const fetchWeather = async () => {
-            try {
-                setIsLoading(true);
-                const response = await axios.get('https://api.weatherapi.com/v1/current.json', {
-                    params: {
-                        key: '3ed0121b9d044816ad7140143230112', // Replace with your API key
-                        q: 'Andorra la Vella', // Replace with the desired location
-                    },
-                });
-
-                const { current } = response.data;
-
-                setWeather({
-                    temperature: current.temp_c,
-                    conditionText: current.condition.text,
-                    iconUrl: current.condition.icon,
-                    wind: `${current.wind_kph} kph`,
-                    humidity: `${current.humidity}`,
-                    feelsLike: current.feelslike_c,
-                    cloud: `${current.cloud}`,
-                });
-            } catch (err) {
-                setError('Failed to fetch weather data');
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchWeather();
+        fetchWeather(city);
     }, []);
+
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -62,6 +72,19 @@ const CurrentWeather = () => {
     return weather ? (
         <div className="bg-white text-gray-800 p-6 rounded-2xl shadow-xl">
             <h2 className="text-2xl font-semibold mb-6">Current Weather</h2>
+            <form onSubmit={handleSubmit(onSubmit)} className="mb-4">
+                <input
+                    {...register("cityInput")}
+                    name="cityInput"
+                    className="p-2 text-gray-700 border rounded shadow-inner mb-4"
+                    placeholder="Enter city"
+                    defaultValue={city}
+                />
+                {formState.errors.cityInput && <p className="text-red-500">City is required.</p>}
+                <button type="submit" className="mx-4 bg-blue-500 text-white p-2 rounded shadow">
+                    Get Weather
+                </button>
+            </form>
             <div className="flex items-center justify-between mb-4">
                 <span className="font-medium">Temperature:</span>
                 <span className="font-bold text-lg">{weather.temperature}°C</span>
