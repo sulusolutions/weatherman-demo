@@ -65,12 +65,6 @@ const CurrentWeather = () => {
         fetchWeather(data.cityInput);
     };
 
-    // Call fetchWeather initially with the default city
-    // useEffect(() => {
-    //     fetchWeather(city);
-    // }, []);
-
-
     if (isLoading) {
         return <div>Loading...</div>;
     }
