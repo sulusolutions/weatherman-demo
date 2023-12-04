@@ -16,12 +16,23 @@ interface WeatherData {
     cloud: string;
 }
 
+const placeholder_weather: WeatherData = {
+    temperature: '',
+    conditionText: '',
+    iconUrl: 'http://cdn.weatherapi.com/weather/64x64/day/116.png',
+    wind: '',
+    humidity: '',
+    feelsLike: '',
+    cloud: '',
+};
+
 const CurrentWeather = () => {
-    const [weather, setWeather] = useState<WeatherData | null>(null);
+    const [weather, setWeather] = useState<WeatherData | null>(placeholder_weather);
     const [error, setError] = useState<string | null>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const { register, handleSubmit, watch, formState } = useForm();
     const [city, setCity] = useState<string>('Waterford, IE');
+
 
     const fetchWeather = async (city: string) => {
         try {
@@ -50,15 +61,15 @@ const CurrentWeather = () => {
         }
     };
 
-    const onSubmit = data => {
+    const onSubmit = (data: { cityInput: string }) => {
         setCity(data.cityInput);
         fetchWeather(data.cityInput);
     };
 
     // Call fetchWeather initially with the default city
-    useEffect(() => {
-        fetchWeather(city);
-    }, []);
+    // useEffect(() => {
+    //     fetchWeather(city);
+    // }, []);
 
 
     if (isLoading) {
@@ -71,7 +82,7 @@ const CurrentWeather = () => {
 
     return weather ? (
         <div className="bg-white text-gray-800 p-6 rounded-2xl shadow-xl">
-            <h2 className="text-2xl font-semibold mb-6">Current Weather</h2>
+            <h2 className="text-2xl font-semibold mb-6">LN Weather</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="mb-4">
                 <input
                     {...register("cityInput")}
