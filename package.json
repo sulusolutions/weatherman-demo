@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@getalby/lightning-tools": "^4.2.1",
     "@icon-park/react": "^1.4.2",
     "axios": "^1.6.2",
     "next": "14.0.3",

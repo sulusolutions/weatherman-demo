@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Wind, WaterLevel, Thermometer, Cloudy } from '@icon-park/react';
 import { useForm } from 'react-hook-form'; // Make sure to install react-hook-form
+import { fetchWithL402 } from "@getalby/lightning-tools";
 
 import WeatherCard from './weatherCard';
 
@@ -25,14 +26,13 @@ const CurrentWeather = () => {
     const fetchWeather = async (city: string) => {
         try {
             setIsLoading(true);
-            const response = await axios.get('https://api.weatherapi.com/v1/current.json', {
-                params: {
-                    key: '3ed0121b9d044816ad7140143230112', 
-                    q: city, 
-                },
-            });
+            const formatted_city = city.replace(/\s/g, '');
+            console.log(formatted_city)
+            const response = await fetchWithL402(`https://weatherman.ln.sulu.sh/current?city=${formatted_city}`, 
+            {}, 
+            {headerKey: "L402"})
 
-            const { current } = response.data;
+            const { current } = await response.json();
 
             setWeather({
                 temperature: current.temp_c,
