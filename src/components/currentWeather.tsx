@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Wind, WaterLevel, Thermometer, Cloudy } from '@icon-park/react';
-import { useForm } from 'react-hook-form'; // Make sure to install react-hook-form
+import { useForm, FieldValues } from 'react-hook-form'; // Make sure to install react-hook-form
 import { fetchWithL402 } from "@getalby/lightning-tools";
 
 import WeatherCard from './weatherCard';
@@ -30,7 +30,7 @@ const CurrentWeather = () => {
     const [weather, setWeather] = useState<WeatherData | null>(placeholder_weather);
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const { register, handleSubmit, watch, formState } = useForm();
+    const { register, handleSubmit, formState } = useForm();
     const [city, setCity] = useState<string>('Waterford, IE');
 
 
@@ -61,7 +61,7 @@ const CurrentWeather = () => {
         }
     };
 
-    const onSubmit = (data: { cityInput: string }) => {
+    const onSubmit = (data: FieldValues) => {
         setCity(data.cityInput);
         fetchWeather(data.cityInput);
     };
