@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { Inter } from 'next/font/google';
 import CurrentWeather from '@/components/currentWeather';
 import React, { useEffect, useState } from 'react';
