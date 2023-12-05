@@ -27,7 +27,7 @@ export default function Home() {
         </header>
       )}
 
-      <main className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}>
+      <main className={`flex min-h-screen flex-col items-center justify-between p-4 sm:p-24 ${inter.className}`}>
         <CurrentWeather />
       </main>
     </>

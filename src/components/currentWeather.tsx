@@ -38,9 +38,9 @@ const CurrentWeather = () => {
             setIsLoading(true);
             const formatted_city = city.replace(/\s/g, '');
             console.log(formatted_city)
-            const response = await fetchWithL402(`https://weatherman.ln.sulu.sh/current?city=${formatted_city}`, 
-            {}, 
-            {headerKey: "L402"})
+            const response = await fetchWithL402(`https://weatherman.ln.sulu.sh/current?city=${formatted_city}`,
+                {},
+                { headerKey: "L402" })
 
             const { current } = await response.json();
 
@@ -74,18 +74,18 @@ const CurrentWeather = () => {
     }
 
     return weather ? (
-        <div className="bg-white text-gray-800 p-6 rounded-2xl shadow-xl">
+        <div className="bg-white text-gray-800 p-6 rounded-2xl shadow-xl sm:p-4 md:p-6 lg:p-8">
             <h2 className="text-2xl font-semibold mb-6">LN Weather</h2>
-            <form onSubmit={handleSubmit(onSubmit)} className="mb-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between">
                 <input
                     {...register("cityInput")}
                     name="cityInput"
-                    className="p-2 text-gray-700 border rounded shadow-inner mb-4"
+                    className="p-2 text-gray-700 border rounded shadow-inner mb-4 w-full sm:w-auto sm:mb-0"
                     placeholder="Enter city"
                     defaultValue={city}
                 />
                 {formState.errors.cityInput && <p className="text-red-500">City is required.</p>}
-                <button type="submit" className="mx-4 bg-blue-500 text-white p-2 rounded shadow">
+                <button type="submit" className="mx-auto block bg-blue-500 text-white p-2 rounded shadow w-full sm:w-auto sm:mx-0 sm:ml-4">
                     Get Weather
                 </button>
             </form>
