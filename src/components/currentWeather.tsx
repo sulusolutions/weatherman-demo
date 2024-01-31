@@ -36,22 +36,15 @@ const CurrentWeather = () => {
     const fetchWeather = async (city: string) => {
         try {
             setIsLoading(true);
-            const formatted_city = city.replace(/\s/g, '');
-            console.log(formatted_city)
-            const response = await fetchWithL402(`https://weatherman.ln.sulu.sh/current?city=${formatted_city}`,
-                {},
-                { headerKey: "L402" })
-
-            const { current } = await response.json();
 
             setWeather({
-                temperature: current.temp_c,
-                conditionText: current.condition.text,
-                iconUrl: current.condition.icon,
-                wind: `${current.wind_kph} kph`,
-                humidity: `${current.humidity}`,
-                feelsLike: current.feelslike_c,
-                cloud: `${current.cloud}`,
+                temperature: '25',
+                conditionText: 'Sunny',
+                iconUrl: 'http://cdn.weatherapi.com/weather/64x64/day/116.png',
+                wind: '10 kph',
+                humidity: '70',
+                feelsLike: '28',
+                cloud: 'Partly cloudy',
             });
         } catch (err) {
             setError('Failed to fetch weather data');
